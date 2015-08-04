@@ -4,22 +4,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainMenuActivityFragment"
+    tools:context="com.example.zoaib.orderassist.FoodListActivityFragment"
     android:orientation="vertical">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:text="@string/title_activity_food_list" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vendor_list_button"
-        android:id="@+id/button_vendorlist" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/order_history_button"
-        android:id="@+id/button_orderlist" />
+        android:text="@string/food_list_button"
+        android:id="@+id/button_food" />
 
 </LinearLayout>

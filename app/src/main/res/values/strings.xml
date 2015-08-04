@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">OrderAssist</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_vendor_list">Vendor List Activity</string>
+    <string name="vendor_list_button">New Order</string>
+    <string name="title_activity_food_list">Food List Activity</string>
+    <string name="food_list_button">Add to Order</string>
+    <string name="hello_world">Welcome</string>
+    <string name="title_activity_checkout">Checkout Activity</string>
+    <string name="title_activity_order_view">Order View Activity</string>
+    <string name="order_history_button">View Orders</string>
 </resources>
