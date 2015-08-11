@@ -25,37 +25,29 @@ public class OrderAssistDBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_FOOD_ITEM_TYPE_TABLE =
                 "CREATE TABLE " + FoodItemType.TABLE_NAME + " (" +
                         FoodItemType._ID + " INTEGER PRIMARY KEY, " +
-                        FoodItemType.COLUMN_FOOD_ITEM_TYPE_ID + " INTEGER UNIQUE NOT NULL, " +
                         FoodItemType.COLUMN_NAME + " TEXT NOT NULL, " +
                         FoodItemType.COLUMN_IMAGE_URL + " TEXT, " +
-                        FoodItemType.COLUMN_STATUS + " TEXT, " +
-                        FoodItemType.COLUMN_CREATED_DATE + " TEXT, " +
-
-                        "UNIQUE (" + FoodItemType.COLUMN_FOOD_ITEM_TYPE_ID +") ON CONFLICT IGNORE);";
+                        FoodItemType.COLUMN_CREATED_DATE + " TEXT);";
 
         final String SQL_CREATE_FOOD_ITEM_TABLE =
                 "CREATE TABLE " + FoodItem.TABLE_NAME + " (" +
                         FoodItem._ID + " INTEGER PRIMARY KEY, " +
-                        FoodItem.COLUMN_FOOD_ITEM_ID + " INTEGER UNIQUE NOT NULL, " +
                         FoodItem.COLUMN_FOOD_VENDOR_ID + " INTEGER NOT NULL, " +
                         FoodItem.COLUMN_FOOD_ITEM_TYPE_ID + " INTEGER NOT NULL, " +
                         FoodItem.COLUMN_NAME + " TEXT NOT NULL, " +
                         FoodItem.COLUMN_IMAGE_URL + " TEXT, " +
                         FoodItem.COLUMN_STATUS + " TEXT, " +
-                        FoodItem.COLUMN_CREATED_DATE + " TEXT, " +
+                        FoodItem.COLUMN_CREATED_DATE + " TEXT," +
 
                         " FOREIGN KEY (" + FoodItem.COLUMN_FOOD_ITEM_TYPE_ID + ") REFERENCES " +
-                        FoodItemType.TABLE_NAME + " (" + FoodItemType.COLUMN_FOOD_ITEM_TYPE_ID + "), " +
+                        FoodItemType.TABLE_NAME + " (" + FoodItemType._ID + "), " +
 
                         " FOREIGN KEY (" + FoodItem.COLUMN_FOOD_VENDOR_ID + ") REFERENCES " +
-                        FoodVendor.TABLE_NAME + " (" + FoodVendor.COLUMN_FOOD_VENDOR_ID + "), " +
-
-                        "UNIQUE (" + FoodItem.COLUMN_FOOD_ITEM_ID +") ON CONFLICT IGNORE);";
+                        FoodVendor.TABLE_NAME + " (" + FoodVendor._ID + "));";
 
         final String SQL_CREATE_FOOD_VENDOR_TABLE =
                 "CREATE TABLE " + FoodVendor.TABLE_NAME + " (" +
                         FoodVendor._ID + " INTEGER PRIMARY KEY, " +
-                        FoodVendor.COLUMN_FOOD_VENDOR_ID + " INTEGER UNIQUE NOT NULL, " +
                         FoodVendor.COLUMN_NAME + " TEXT NOT NULL, " +
                         FoodVendor.COLUMN_ADDRESS + " TEXT, " +
                         FoodVendor.COLUMN_CONTACT + " TEXT, " +
@@ -63,37 +55,29 @@ public class OrderAssistDBHelper extends SQLiteOpenHelper {
                         FoodVendor.COLUMN_COORD_LONG + " REAL NOT NULL, " +
                         FoodVendor.COLUMN_IMAGE_URL + " TEXT, " +
                         FoodVendor.COLUMN_STATUS + " TEXT, " +
-                        FoodVendor.COLUMN_CREATED_DATE + " TEXT, " +
-
-                        "UNIQUE (" + FoodVendor.COLUMN_FOOD_VENDOR_ID +") ON CONFLICT IGNORE);";
+                        FoodVendor.COLUMN_CREATED_DATE + " TEXT);";
 
         final String SQL_CREATE_ORDER_TABLE =
                 "CREATE TABLE " + Order.TABLE_NAME + " (" +
                         Order._ID + " INTEGER PRIMARY KEY, " +
-                        Order.COLUMN_ORDER_ID + " INTEGER UNIQUE NOT NULL, " +
                         Order.COLUMN_IS_DELIVERED + " TEXT NOT NULL, " +
                         Order.COLUMN_CREATED_BY + " TEXT, " +
                         Order.COLUMN_STATUS + " TEXT, " +
-                        Order.COLUMN_CREATED_DATE + " TEXT, " +
-
-                        "UNIQUE (" + Order.COLUMN_ORDER_ID +") ON CONFLICT IGNORE);";
+                        Order.COLUMN_CREATED_DATE + " TEXT);";
 
         final String SQL_CREATE_ORDER_DETAIL_TABLE =
                 "CREATE TABLE " + OrderDetail.TABLE_NAME + " (" +
                         OrderDetail._ID + " INTEGER PRIMARY KEY, " +
-                        OrderDetail.COLUMN_ORDER_DETAIL_ID + " INTEGER UNIQUE NOT NULL," +
                         OrderDetail.COLUMN_ORDER_ID + " INTEGER NOT NULL, " +
                         OrderDetail.COLUMN_FOOD_ITEM_ID + " INTEGER NOT NULL, " +
                         OrderDetail.COLUMN_QUANTITY + " INTEGER NOT NULL, " +
-                        OrderDetail.COLUMN_STATUS + " TEXT, " +
+                        OrderDetail.COLUMN_STATUS + " TEXT," +
 
                         " FOREIGN KEY (" + OrderDetail.COLUMN_ORDER_ID + ") REFERENCES " +
-                        Order.TABLE_NAME + " (" + Order.COLUMN_ORDER_ID + "), " +
+                        Order.TABLE_NAME + " (" + Order._ID + "), " +
 
                         " FOREIGN KEY (" + OrderDetail.COLUMN_FOOD_ITEM_ID + ") REFERENCES " +
-                        FoodItem.TABLE_NAME + " (" + FoodItem.COLUMN_FOOD_ITEM_ID + "), " +
-
-                        "UNIQUE (" + OrderDetail.COLUMN_ORDER_DETAIL_ID +") ON CONFLICT IGNORE);";
+                        FoodItem.TABLE_NAME + " (" + FoodItem._ID + "));";
 
         db.execSQL(SQL_CREATE_FOOD_ITEM_TYPE_TABLE);
         db.execSQL(SQL_CREATE_FOOD_VENDOR_TABLE);

@@ -60,6 +60,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.zoaib.orderassist.MainMenuActivity" />
         </activity>
+        <provider
+            android:authorities="com.example.zoaib.orderassist" android:name=".data.OrderAssistProvider" />
     </application>
 
 </manifest>
