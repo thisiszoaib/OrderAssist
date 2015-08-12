@@ -11,7 +11,7 @@ import com.example.zoaib.orderassist.data.OrderAssistContract.*;
  */
 public class OrderAssistDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public static final String DATABASE_NAME = "orderAssist.db";
 
@@ -38,6 +38,7 @@ public class OrderAssistDBHelper extends SQLiteOpenHelper {
                         FoodItem.COLUMN_IMAGE_URL + " TEXT, " +
                         FoodItem.COLUMN_STATUS + " TEXT, " +
                         FoodItem.COLUMN_CREATED_DATE + " TEXT," +
+                        FoodItem.COLUMN_UNIT_PRICE + " REAL," +
 
                         " FOREIGN KEY (" + FoodItem.COLUMN_FOOD_ITEM_TYPE_ID + ") REFERENCES " +
                         FoodItemType.TABLE_NAME + " (" + FoodItemType._ID + "), " +
@@ -51,8 +52,8 @@ public class OrderAssistDBHelper extends SQLiteOpenHelper {
                         FoodVendor.COLUMN_NAME + " TEXT NOT NULL, " +
                         FoodVendor.COLUMN_ADDRESS + " TEXT, " +
                         FoodVendor.COLUMN_CONTACT + " TEXT, " +
-                        FoodVendor.COLUMN_COORD_LAT + " REAL NOT NULL, " +
-                        FoodVendor.COLUMN_COORD_LONG + " REAL NOT NULL, " +
+                        FoodVendor.COLUMN_COORD_LAT + " REAL, " +
+                        FoodVendor.COLUMN_COORD_LONG + " REAL, " +
                         FoodVendor.COLUMN_IMAGE_URL + " TEXT, " +
                         FoodVendor.COLUMN_STATUS + " TEXT, " +
                         FoodVendor.COLUMN_CREATED_DATE + " TEXT);";

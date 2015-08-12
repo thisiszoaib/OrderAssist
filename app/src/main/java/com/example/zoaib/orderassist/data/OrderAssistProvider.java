@@ -14,6 +14,7 @@ import android.net.Uri;
 public class OrderAssistProvider extends ContentProvider {
 
     public static final int FOOD_ITEM_TYPE = 100;
+    public static final int FOOD_ITEM_TYPE_ID = 101;
 
     public static final int FOOD_ITEM = 200;
     public static final int FOOD_ITEM_ID = 201;
@@ -38,6 +39,7 @@ public class OrderAssistProvider extends ContentProvider {
         final String authority = OrderAssistContract.CONTENT_AUTHORITY;
 
         matcher.addURI(authority,OrderAssistContract.PATH_FOOD_ITEM_TYPE,FOOD_ITEM_TYPE);
+        matcher.addURI(authority,OrderAssistContract.PATH_FOOD_ITEM_TYPE + "/#",FOOD_ITEM_TYPE_ID);
 
         matcher.addURI(authority,OrderAssistContract.PATH_FOOD_ITEM,FOOD_ITEM);
         matcher.addURI(authority,OrderAssistContract.PATH_FOOD_ITEM + "/#",FOOD_ITEM_ID);
@@ -74,6 +76,18 @@ public class OrderAssistProvider extends ContentProvider {
 
         switch(sUriMatcher.match(uri))
         {
+            case FOOD_ITEM_TYPE_ID:
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        OrderAssistContract.FoodItemType.TABLE_NAME,
+                        projection,
+                        OrderAssistContract.FoodItemType._ID + " = '" + ContentUris.parseId(uri) + "'",
+                        null,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
             case FOOD_ITEM_TYPE:
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         OrderAssistContract.FoodItemType.TABLE_NAME,
@@ -197,6 +211,8 @@ public class OrderAssistProvider extends ContentProvider {
         {
             case FOOD_ITEM_TYPE:
                 return OrderAssistContract.FoodItemType.CONTENT_TYPE;
+            case FOOD_ITEM_TYPE_ID:
+                return OrderAssistContract.FoodItemType.CONTENT_ITEM_TYPE;
             case FOOD_ITEM:
                 return OrderAssistContract.FoodItem.CONTENT_TYPE;
             case FOOD_ITEM_ID:
@@ -286,7 +302,48 @@ public class OrderAssistProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsDeleted=0;
+        switch(match)
+        {
+            case ORDER:{
+                rowsDeleted = db.delete(OrderAssistContract.Order.TABLE_NAME,
+                        selection,
+                        selectionArgs);
+                break;
+            }
+            case ORDER_DETAIL:{
+                rowsDeleted = db.delete(OrderAssistContract.OrderDetail.TABLE_NAME,
+                        selection,
+                        selectionArgs);
+                break;
+            }
+            case FOOD_ITEM:{
+                rowsDeleted = db.delete(OrderAssistContract.FoodItem.TABLE_NAME,
+                        selection,
+                        selectionArgs);
+                break;
+            }
+            case FOOD_ITEM_TYPE:{
+                rowsDeleted = db.delete(OrderAssistContract.FoodItemType.TABLE_NAME,
+                        selection,
+                        selectionArgs);
+                break;
+            }
+            case FOOD_VENDOR:{
+                rowsDeleted = db.delete(OrderAssistContract.FoodVendor.TABLE_NAME,
+                        selection,
+                        selectionArgs);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown URI: " + uri);
+        }
+
+        if(selection == null || rowsDeleted != 0)
+            getContext().getContentResolver().notifyChange(uri,null);
+        return rowsDeleted;
     }
 
     @Override
